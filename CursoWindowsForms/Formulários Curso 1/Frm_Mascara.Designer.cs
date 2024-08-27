@@ -29,6 +29,7 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Frm_Mascara));
+            this.Msk_TextBox = new System.Windows.Forms.MaskedTextBox();
             this.Lbl_Conteudo = new System.Windows.Forms.Label();
             this.Lbl_MascaraAtiva = new System.Windows.Forms.Label();
             this.Btn_Hora = new System.Windows.Forms.Button();
@@ -38,16 +39,23 @@
             this.Btn_Senha = new System.Windows.Forms.Button();
             this.Btn_Telefone = new System.Windows.Forms.Button();
             this.Btn_VerConteudo = new System.Windows.Forms.Button();
-            this.Msk_TextBox = new System.Windows.Forms.MaskedTextBox();
             this.SuspendLayout();
+            // 
+            // Msk_TextBox
+            // 
+            this.Msk_TextBox.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Msk_TextBox.Location = new System.Drawing.Point(23, 31);
+            this.Msk_TextBox.Name = "Msk_TextBox";
+            this.Msk_TextBox.Size = new System.Drawing.Size(258, 26);
+            this.Msk_TextBox.TabIndex = 0;
             // 
             // Lbl_Conteudo
             // 
             this.Lbl_Conteudo.AutoSize = true;
-            this.Lbl_Conteudo.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Lbl_Conteudo.Font = new System.Drawing.Font("Arial", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Lbl_Conteudo.Location = new System.Drawing.Point(23, 246);
             this.Lbl_Conteudo.Name = "Lbl_Conteudo";
-            this.Lbl_Conteudo.Size = new System.Drawing.Size(0, 19);
+            this.Lbl_Conteudo.Size = new System.Drawing.Size(0, 16);
             this.Lbl_Conteudo.TabIndex = 1;
             // 
             // Lbl_MascaraAtiva
@@ -129,20 +137,11 @@
             this.Btn_VerConteudo.UseVisualStyleBackColor = true;
             this.Btn_VerConteudo.Click += new System.EventHandler(this.Btn_VerConteudo_Click);
             // 
-            // Msk_TextBox
-            // 
-            this.Msk_TextBox.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.Msk_TextBox.Location = new System.Drawing.Point(23, 31);
-            this.Msk_TextBox.Name = "Msk_TextBox";
-            this.Msk_TextBox.Size = new System.Drawing.Size(258, 26);
-            this.Msk_TextBox.TabIndex = 10;
-            // 
             // Frm_Mascara
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(312, 283);
-            this.Controls.Add(this.Msk_TextBox);
             this.Controls.Add(this.Btn_VerConteudo);
             this.Controls.Add(this.Btn_Telefone);
             this.Controls.Add(this.Btn_Senha);
@@ -152,7 +151,10 @@
             this.Controls.Add(this.Btn_Hora);
             this.Controls.Add(this.Lbl_MascaraAtiva);
             this.Controls.Add(this.Lbl_Conteudo);
+            this.Controls.Add(this.Msk_TextBox);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.MaximizeBox = false;
             this.Name = "Frm_Mascara";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Exemplos de Máscaras";
@@ -162,6 +164,8 @@
         }
 
         #endregion
+
+        private System.Windows.Forms.MaskedTextBox Msk_TextBox;
         private System.Windows.Forms.Label Lbl_Conteudo;
         private System.Windows.Forms.Label Lbl_MascaraAtiva;
         private System.Windows.Forms.Button Btn_Hora;
@@ -171,6 +175,5 @@
         private System.Windows.Forms.Button Btn_Senha;
         private System.Windows.Forms.Button Btn_Telefone;
         private System.Windows.Forms.Button Btn_VerConteudo;
-        private System.Windows.Forms.MaskedTextBox Msk_TextBox;
     }
 }

@@ -1,4 +1,5 @@
-﻿using System.Windows.Forms;
+﻿using System;
+using System.Windows.Forms;
 
 namespace CursoWindowsForms
 {
@@ -9,21 +10,22 @@ namespace CursoWindowsForms
             InitializeComponent();
         }
 
-        private void Txt_input_KeyDown(object sender, KeyEventArgs e)
+        private void Txt_Input_KeyDown(object sender, KeyEventArgs e)
         {
-            Txt_Msg.AppendText($"\r\nPressionei a tecla: {e.KeyCode}\r\n");
-            Txt_Msg.AppendText($"\tCódigo da tecla: {e.KeyValue}\r\n");
-            Txt_Msg.AppendText($"\tNome da tecla: {e.KeyData}\r\n");
+            Txt_Msg.AppendText("\r\n" + "Pressionei uma tecla: " + e.KeyCode + "\r\n");
+            Txt_Msg.AppendText("\t" + "Código da tecla: " + ((int)e.KeyCode) + "\r\n");
+            Txt_Msg.AppendText("\t" + "Nome da tecla: " + e.KeyData + "\r\n");
             Lbl_Lower.Text = e.KeyCode.ToString().ToLower();
             Lbl_Upper.Text = e.KeyCode.ToString().ToUpper();
         }
 
-        private void Btn_Reset_Click(object sender, System.EventArgs e)
+        private void Btn_Reset_Click(object sender, EventArgs e)
         {
             Txt_Msg.Text = "";
-            Txt_input.Text = "";
-            Lbl_Lower.Text = "";
+            Txt_Input.Text = "";
             Lbl_Upper.Text = "";
+            Lbl_Lower.Text = "";
+
         }
     }
 }

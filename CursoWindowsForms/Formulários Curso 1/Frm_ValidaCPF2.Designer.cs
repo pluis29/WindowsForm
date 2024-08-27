@@ -36,28 +36,30 @@
             // 
             // Msk_CPF
             // 
-            this.Msk_CPF.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Msk_CPF.Location = new System.Drawing.Point(12, 45);
             this.Msk_CPF.Mask = "000,000,000-00";
             this.Msk_CPF.Name = "Msk_CPF";
-            this.Msk_CPF.Size = new System.Drawing.Size(218, 26);
+            this.Msk_CPF.Size = new System.Drawing.Size(218, 20);
             this.Msk_CPF.TabIndex = 0;
             // 
             // Btn_Reset
             // 
+            this.Btn_Reset.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.Btn_Reset.Location = new System.Drawing.Point(245, 42);
             this.Btn_Reset.Name = "Btn_Reset";
             this.Btn_Reset.Size = new System.Drawing.Size(111, 23);
-            this.Btn_Reset.TabIndex = 1;
+            this.Btn_Reset.TabIndex = 2;
             this.Btn_Reset.Text = "Limpa";
             this.Btn_Reset.UseVisualStyleBackColor = true;
+            this.Btn_Reset.Click += new System.EventHandler(this.Btn_Reset_Click);
             // 
             // Btn_Valida
             // 
+            this.Btn_Valida.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.Btn_Valida.Location = new System.Drawing.Point(245, 71);
             this.Btn_Valida.Name = "Btn_Valida";
             this.Btn_Valida.Size = new System.Drawing.Size(111, 23);
-            this.Btn_Valida.TabIndex = 2;
+            this.Btn_Valida.TabIndex = 3;
             this.Btn_Valida.Text = "Valida";
             this.Btn_Valida.UseVisualStyleBackColor = true;
             this.Btn_Valida.Click += new System.EventHandler(this.Btn_Valida_Click);
@@ -70,10 +72,12 @@
             this.Controls.Add(this.Btn_Valida);
             this.Controls.Add(this.Btn_Reset);
             this.Controls.Add(this.Msk_CPF);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.MaximizeBox = false;
             this.Name = "Frm_ValidaCPF2";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "Validação CPF";
+            this.Text = "Valida CPF";
             this.ResumeLayout(false);
             this.PerformLayout();
 

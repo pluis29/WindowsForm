@@ -10,17 +10,17 @@ namespace CursoWindowsForms
             InitializeComponent();
         }
 
-        private void Btn_DemonstracaoKey_Click(object sender, EventArgs e)
+        private void Btn_DemostracaoKey_Click(object sender, EventArgs e)
         {
             Frm_DemonstracaoKey f = new Frm_DemonstracaoKey();
             f.ShowDialog();
+
         }
 
         private void Btn_HelloWorld_Click(object sender, EventArgs e)
         {
             Frm_HelloWorld f = new Frm_HelloWorld();
             f.ShowDialog();
-
         }
 
         private void Btn_Mascara_Click(object sender, EventArgs e)
@@ -29,7 +29,7 @@ namespace CursoWindowsForms
             f.ShowDialog();
         }
 
-        private void Btn_ValilaCPF_Click(object sender, EventArgs e)
+        private void Btn_ValidaCPF_Click(object sender, EventArgs e)
         {
             Frm_ValidaCPF f = new Frm_ValidaCPF();
             f.ShowDialog();

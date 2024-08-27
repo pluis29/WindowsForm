@@ -123,5 +123,13 @@ namespace CursoWindowsFormBiblioteca
                     return ForcaDaSenha.Segura;
             }
         }
+        public static bool validaSenhaLogin(string senha)
+        {
+            if (senha == "curso")
+            {
+                return true;
+            }
+            return false;
+        }
     }
 }

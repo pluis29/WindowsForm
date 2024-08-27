@@ -9,14 +9,15 @@ namespace CursoWindowsForms
         {
             InitializeComponent();
         }
+
         private void Btn_Sair_Click(object sender, EventArgs e)
         {
             this.Close();
         }
 
-        private void button1_Click(object sender, EventArgs e)
+        private void Btn_ModificaLabel_Click(object sender, EventArgs e)
         {
-            Lbl_Titulo.Text = Txt_Input.Text;
+            lbl_Titulo.Text = Txt_ConteudoLabel.Text;
         }
     }
 }

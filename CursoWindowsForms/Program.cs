@@ -3,17 +3,17 @@ using System.Windows.Forms;
 
 namespace CursoWindowsForms
 {
-    internal static class Program
+    static class Program
     {
         /// <summary>
-        /// The main entry point for the application.
+        /// Ponto de entrada principal para o aplicativo.
         /// </summary>
         [STAThread]
         static void Main()
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new Frm_Principal());
+            Application.Run(new Frm_Principal_Menu_UC());
         }
     }
 }
