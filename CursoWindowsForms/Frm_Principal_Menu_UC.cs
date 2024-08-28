@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Drawing;
 using System.Windows.Forms;
 
 namespace CursoWindowsForms
@@ -13,6 +14,7 @@ namespace CursoWindowsForms
         int ControleValidaSenha = 0;
         int ControleValidaCPF2 = 0;
         int ControleArquivoImagem = 0;
+        int ControleCadastroCliente = 0;
 
         public Frm_Principal_Menu_UC()
         {
@@ -21,6 +23,7 @@ namespace CursoWindowsForms
             abrirImagemToolStripMenuItem.Enabled = false;
             apagarAbaToolStripMenuItem.Enabled = false;
             desconectarToolStripMenuItem.Enabled = false;
+            cadastrosToolStripMenuItem.Enabled = false;
         }
 
         private void validaCPFToolStripMenuItem_Click(object sender, EventArgs e)
@@ -110,7 +113,7 @@ namespace CursoWindowsForms
         {
             if (!(Tbc_Aplicacoes.SelectedTab == null))
             {
-                Tbc_Aplicacoes.TabPages.Remove(Tbc_Aplicacoes.SelectedTab);
+                ApagaAba(Tbc_Aplicacoes.SelectedTab);
             }
         }
 
@@ -150,6 +153,7 @@ namespace CursoWindowsForms
                     apagarAbaToolStripMenuItem.Enabled = true;
                     conectarToolStripMenuItem.Enabled = false;
                     desconectarToolStripMenuItem.Enabled = true;
+                    cadastrosToolStripMenuItem.Enabled = true;
                     MessageBox.Show($"Bem Vindo {login}", "Mensagem", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
                 else
@@ -168,7 +172,7 @@ namespace CursoWindowsForms
             {
                 for (int i = Tbc_Aplicacoes.TabPages.Count - 1; i >= 0; i--)
                 {
-                    Tbc_Aplicacoes.TabPages.Remove(Tbc_Aplicacoes.TabPages[i]);
+                    ApagaAba(Tbc_Aplicacoes.TabPages[i]);
                 }
 
                 desconectarToolStripMenuItem.Enabled = false;
@@ -176,8 +180,113 @@ namespace CursoWindowsForms
                 abrirImagemToolStripMenuItem.Enabled = false;
                 apagarAbaToolStripMenuItem.Enabled = false;
                 conectarToolStripMenuItem.Enabled = true;
+                cadastrosToolStripMenuItem.Enabled = false;
             }
 
+        }
+
+        private void Tbc_Aplicacoes_MouseDown(object sender, MouseEventArgs e)
+        {
+            if (e.Button == System.Windows.Forms.MouseButtons.Right)
+            {
+                var contextMenu = new ContextMenuStrip();
+                var vToolTip001 = DesenhaItemMenu("Apagar a aba", "DeleteTab");
+                var vToolTip002 = DesenhaItemMenu("Apagar todas a esquerda", "DeleteLeft");
+                var vToolTip003 = DesenhaItemMenu("Apagar todas a direita", "DeleteRight");
+                var vToolTip004 = DesenhaItemMenu("Apagar todas menos esta", "DeleteAll");
+                contextMenu.Items.Add(vToolTip001);
+                contextMenu.Items.Add(vToolTip002);
+                contextMenu.Items.Add(vToolTip003);
+                contextMenu.Items.Add(vToolTip004);
+
+                contextMenu.Show(this, e.X, e.Y);
+                vToolTip001.Click += new System.EventHandler(vToolTip001_Click);
+                vToolTip002.Click += new System.EventHandler(vToolTip002_Click);
+                vToolTip003.Click += new System.EventHandler(vToolTip003_Click);
+                vToolTip004.Click += new System.EventHandler(vToolTip004_Click);
+            }
+
+        }
+        void vToolTip001_Click(object sender1, EventArgs e1)
+        {
+            if (!(Tbc_Aplicacoes.SelectedTab == null))
+            {
+                ApagaAba(Tbc_Aplicacoes.SelectedTab);
+            }
+        }
+        void vToolTip002_Click(object sender1, EventArgs e1)
+        {
+            if (!(Tbc_Aplicacoes.SelectedTab == null))
+            {
+                apagaEsquerda(Tbc_Aplicacoes.SelectedIndex);
+            }
+        }
+        void vToolTip003_Click(object sender1, EventArgs e1)
+        {
+            if (!(Tbc_Aplicacoes.SelectedTab == null))
+            {
+                apagaDireita(Tbc_Aplicacoes.SelectedIndex);
+            }
+        }
+        void vToolTip004_Click(object sender1, EventArgs e1)
+        {
+            if (!(Tbc_Aplicacoes.SelectedTab == null))
+            {
+                apagaEsquerda(Tbc_Aplicacoes.SelectedIndex);
+                apagaDireita(Tbc_Aplicacoes.SelectedIndex);
+            }
+        }
+        ToolStripMenuItem DesenhaItemMenu(string text, string nomeImagem)
+        {
+            var vToolTip = new ToolStripMenuItem();
+            vToolTip.Text = text;
+            Image myImage = (Image)global::CursoWindowsForms.Properties.Resources.ResourceManager.GetObject(nomeImagem);
+            vToolTip.Image = myImage;
+            return vToolTip;
+        }
+        void apagaEsquerda(int index)
+        {
+            for (int i = index - 1; i >= 0; i--)
+            {
+                ApagaAba(Tbc_Aplicacoes.TabPages[i]);
+            }
+        }
+        void apagaDireita(int index)
+        {
+            for (int i = Tbc_Aplicacoes.TabCount - 1; i > index; i--)
+            {
+                ApagaAba(Tbc_Aplicacoes.TabPages[i]);
+            }
+        }
+
+        private void clientesToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (ControleCadastroCliente == 0)
+            {
+                ControleCadastroCliente += 1;
+                Frm_CadastroCliente_UC U = new Frm_CadastroCliente_UC();
+                U.Dock = DockStyle.Fill;
+                TabPage TB = new TabPage();
+                TB.Name = "Cadastro  de Clientes";
+                TB.Text = "Cadastro  de Clientes";
+                TB.ImageIndex = 7;
+                TB.Controls.Add(U);
+                Tbc_Aplicacoes.TabPages.Add(TB);
+
+            }
+            else
+            {
+                MessageBox.Show("Não posso abrir o Cadastro de Clientes porque já esta aberto.", "Banco ByteBank", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
+        }
+
+        void ApagaAba(TabPage TB)
+        {
+            if (TB.Name == "Cadastro  de Clientes")
+            {
+                ControleCadastroCliente = 0;
+            }
+            Tbc_Aplicacoes.TabPages.Remove(TB);
         }
     }
 }
