@@ -70,6 +70,8 @@ namespace CursoWindowsForms
             Tls_Principal.Items[2].ToolTipText = "Atualize um cliente já existente.";
             Tls_Principal.Items[3].ToolTipText = "Apaga o cliente selecionado.";
             Tls_Principal.Items[4].ToolTipText = "Limpa dados da tela de entrada de dados.";
+            Grp_DataGrid.Text = "Clientes";
+            AtualizaGrid();
 
             LimparFormulario();
         }
@@ -117,9 +119,10 @@ namespace CursoWindowsForms
                 C.ValidaClasse();
                 C.ValidaComplemento();
                 //C.IncluirFicharioDB("Cliente");
-                C.IncluirFicharioSQL("Cliente");
+                //C.IncluirFicharioSQL("Cliente");
+                C.IncluirFicharioSQLREL();
                 MessageBox.Show("OK: Indentificador incluido com sucesso.", "ByteBank", MessageBoxButtons.OK, MessageBoxIcon.Information);
-
+                AtualizaGrid();
             }
             catch (ValidationException ex)
             {
@@ -143,7 +146,8 @@ namespace CursoWindowsForms
                 {
                     Cliente.Unit c = new Cliente.Unit();
                     //c = c.BuscarFicharioDB(Txt_Codigo.Text, "Cliente");
-                    c = c.BuscarFicharioSQL(Txt_Codigo.Text, "Cliente");
+                    //c = c.BuscarFicharioSQL(Txt_Codigo.Text, "Cliente");
+                    c = c.BuscarFicharioSQLREL(Txt_Codigo.Text);
                     if (c == null)
                     {
                         MessageBox.Show("Identificador não encontrada.", "ByteBank", MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -166,7 +170,7 @@ namespace CursoWindowsForms
             Txt_NomeCliente.Text = C.Nome;
             Txt_NomeMae.Text = C.NomeMae;
 
-            if (C.NaoTemPai == true)
+            if (C.NaoTemPai == 1)
             {
                 Chk_TemPai.Checked = true;
                 Txt_NomePai.Text = "";
@@ -232,8 +236,10 @@ namespace CursoWindowsForms
                     C.ValidaClasse();
                     C.ValidaComplemento();
                     //C.AlterarFicharioDB("Cliente");
-                    C.AlterarFicharioSQL("Cliente");
+                    //C.AlterarFicharioSQL("Cliente");
+                    C.AlterarFicharioSQLREL();
                     MessageBox.Show("OK: Indentificador alterado com sucesso.", "ByteBank", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    AtualizaGrid();
                 }
                 catch (ValidationException Ex)
                 {
@@ -258,7 +264,8 @@ namespace CursoWindowsForms
                 {
                     Cliente.Unit C = new Cliente.Unit();
                     //C = C.BuscarFicharioDB(Txt_Codigo.Text, "Cliente");
-                    C = C.BuscarFicharioSQL(Txt_Codigo.Text, "Cliente");
+                    //C = C.BuscarFicharioSQL(Txt_Codigo.Text, "Cliente");
+                    C = C.BuscarFicharioSQLREL(Txt_Codigo.Text);
                     if (C == null)
                     {
                         MessageBox.Show("Identificador não encontrado.", "ByteBank", MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -271,8 +278,10 @@ namespace CursoWindowsForms
                         if (Db.DialogResult == DialogResult.Yes)
                         {
                             //C.ApagarFicharioDB("Cliente");
-                            C.ApagarFicharioSQL("Cliente");
+                            //C.ApagarFicharioSQL("Cliente");
+                            C.ApagarFicharioSQLREL();
                             MessageBox.Show("OK: Indentificador apagado com sucesso", "ByteBank", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                            AtualizaGrid();
                             LimparFormulario();
                         }
                     }
@@ -297,11 +306,11 @@ namespace CursoWindowsForms
             C.NomePai = Txt_NomePai.Text;
             if (Chk_TemPai.Checked)
             {
-                C.NaoTemPai = true;
+                C.NaoTemPai = 1;
             }
             else
             {
-                C.NaoTemPai = false;
+                C.NaoTemPai = 0;
             }
             if (Rdb_Masculino.Checked)
             {
@@ -386,14 +395,16 @@ namespace CursoWindowsForms
             {
                 Cliente.Unit C = new Cliente.Unit();
                 //var ListaBusca = C.BuscarFicharioDBTodosDB("Cliente");
-                var ListaBusca = C.BuscarFicharioDBTodosSQL("Cliente");
+                //var ListaBusca = C.BuscarFicharioDBTodosSQL("Cliente");
+                var ListaBusca = C.BuscarFicharioDBTodosSQLREL();
                 Frm_Busca FForm = new Frm_Busca(ListaBusca);
                 FForm.ShowDialog();
                 if (FForm.DialogResult == DialogResult.OK)
                 {
                     var idSelect = FForm.idSelect;
                     //C = C.BuscarFicharioDB(idSelect, "Cliente");
-                    C = C.BuscarFicharioSQL(idSelect, "Cliente");
+                    //C = C.BuscarFicharioSQL(idSelect, "Cliente");
+                    C = C.BuscarFicharioSQLREL(idSelect);
                     if (C == null)
                     {
                         MessageBox.Show("Identificador não encontrado.", "ByteBank", MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -409,5 +420,52 @@ namespace CursoWindowsForms
                 MessageBox.Show(Ex.Message, "ByteBank", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
+        private void AtualizaGrid()
+        {
+            try
+            {
+                Cliente.Unit C = new Cliente.Unit();
+                var ListaBusca = C.BuscarFicharioDBTodosSQLREL();
+                Dg_Clientes.Rows.Clear();
+                for (int i = 0; i <= ListaBusca.Count - 1; i++)
+                {
+                    DataGridViewRow row = new DataGridViewRow();
+                    row.CreateCells(Dg_Clientes);
+                    row.Cells[0].Value = ListaBusca[i][0].ToString();
+                    row.Cells[1].Value = ListaBusca[i][1].ToString();
+                    Dg_Clientes.Rows.Add(row);
+                }
+            }
+            catch (Exception Ex)
+            {
+                MessageBox.Show(Ex.Message, "ByteBank", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void Dg_Clientes_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
+        {
+            try
+            {
+                DataGridViewRow row = new DataGridViewRow();
+                row = Dg_Clientes.SelectedRows[0];
+                string Id = row.Cells[0].Value.ToString();
+
+                Cliente.Unit C = new Cliente.Unit();
+                C = C.BuscarFicharioSQLREL(Id);
+                if (C == null)
+                {
+                    MessageBox.Show("Identificador não encontrado.", "ByteBank", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+                else
+                {
+                    EscreveFormulario(C);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "ByteBank", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
     }
+
 }
