@@ -1,4 +1,6 @@
-﻿using System;
+﻿using CursoWindowsFormBiblioteca.Databases;
+using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Text;
@@ -92,10 +94,201 @@ namespace CursoWindowsFormBiblioteca.Classes
                     throw new Exception("CPF inválido");
                 }
             }
+
+            #region "CRUD do fichario"
+            public void IncluirFichario(string Conexao)
+            {
+                string clienteJson = Cliente.SerializedClassUnit(this);
+                Fichario F = new Fichario(Conexao);
+                if (F.status)
+                {
+                    F.Incluir(this.Id, clienteJson);
+                    if (!(F.status))
+                    {
+                        throw new Exception(F.mensagem);
+                    }
+                }
+                else
+                {
+                    throw new Exception(F.mensagem);
+                }
+            }
+            public Unit BuscarFichario(string Id, string conexao)
+            {
+                Fichario F = new Fichario(conexao);
+                string clienteJson = F.Buscar(Id);
+                if (F.status)
+                {
+                    return Cliente.DesSerializedClassUnit(clienteJson);
+                }
+                else
+                {
+                    throw new Exception(F.mensagem);
+                }
+
+            }
+            public void AlterarFichario(string conexao)
+            {
+                string clienteJson = Cliente.SerializedClassUnit(this);
+                Fichario F = new Fichario(conexao);
+                if (F.status)
+                {
+                    F.Alterar(this.Id, clienteJson);
+                    if (!F.status)
+                    {
+                        throw new Exception(F.mensagem);
+                    }
+                }
+                else
+                {
+                    throw new Exception(F.mensagem);
+                }
+            }
+
+            public void ApagarFichario(string conexao)
+            {
+                Fichario F = new Fichario(conexao);
+                if (F.status)
+                {
+                    F.Apagar(this.Id);
+                    if (!(F.status))
+                    {
+                        throw new Exception(F.mensagem);
+                    }
+                }
+                else
+                {
+                    throw new Exception(F.mensagem);
+                }
+            }
+            public List<string> listaFichario(string conexao)
+            {
+                Fichario F = new Fichario(conexao);
+                if (F.status)
+                {
+                    List<string> todosJson = F.BuscarTodos();
+                    return todosJson;
+                }
+                else
+                {
+                    throw new Exception(F.mensagem);
+                }
+            }
+
+            #endregion
+
+            #region "CRUD do FicharioDB Local DB"
+
+            public void IncluirFicharioDB(string Conexao)
+            {
+                string clienteJson = Cliente.SerializedClassUnit(this);
+                FicharioDB F = new FicharioDB(Conexao);
+                if (F.status)
+                {
+                    F.Incluir(this.Id, clienteJson);
+                    if (!(F.status))
+                    {
+                        throw new Exception(F.mensagem);
+                    }
+                }
+                else
+                {
+                    throw new Exception(F.mensagem);
+                }
+            }
+
+            public Unit BuscarFicharioDB(string id, string conexao)
+            {
+                FicharioDB F = new FicharioDB(conexao);
+                if (F.status)
+                {
+                    string clienteJson = F.Buscar(id);
+                    return Cliente.DesSerializedClassUnit(clienteJson);
+                }
+                else
+                {
+                    throw new Exception(F.mensagem);
+                }
+            }
+
+            public void AlterarFicharioDB(string conexao)
+            {
+                string clienteJson = Cliente.SerializedClassUnit(this);
+                FicharioDB F = new FicharioDB(conexao);
+                if (F.status)
+                {
+                    F.Alterar(this.Id, clienteJson);
+                    if (!(F.status))
+                    {
+                        throw new Exception(F.mensagem);
+                    }
+                }
+                else
+                {
+                    throw new Exception(F.mensagem);
+                }
+            }
+
+            public void ApagarFicharioDB(string conexao)
+            {
+
+                FicharioDB F = new FicharioDB(conexao);
+                if (F.status)
+                {
+                    F.Apagar(this.Id);
+                    if (!(F.status))
+                    {
+                        throw new Exception(F.mensagem);
+                    }
+                }
+                else
+                {
+                    throw new Exception(F.mensagem);
+                }
+
+            }
+
+            public List<List<string>> BuscarFicharioDBTodosDB(string conexao)
+            {
+                FicharioDB F = new FicharioDB(conexao);
+                if (F.status)
+                {
+                    List<string> List = new List<string>();
+                    List = F.BuscarTodos();
+                    if (F.status)
+                    {
+                        List<List<string>> ListaBusca = new List<List<string>>();
+                        for (int i = 0; i <= List.Count - 1; i++)
+                        {
+                            Cliente.Unit C = Cliente.DesSerializedClassUnit(List[i]);
+                            ListaBusca.Add(new List<string> { C.Id, C.Nome });
+                        }
+                        return ListaBusca;
+                    }
+                    else
+                    {
+                        throw new Exception(F.mensagem);
+                    }
+                }
+                else
+                {
+                    throw new Exception(F.mensagem);
+                }
+            }
+            #endregion
+
         }
         public class List
         {
             public List<Unit> ListUnit { get; set; }
+        }
+        public static string SerializedClassUnit(Unit unit)
+        {
+            return JsonConvert.SerializeObject(unit);
+        }
+        public static Unit DesSerializedClassUnit(string vJson)
+        {
+            return JsonConvert.DeserializeObject<Unit>(vJson);
         }
     }
 }

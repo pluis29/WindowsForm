@@ -128,7 +128,7 @@ namespace CursoWindowsFormBiblioteca
         }
         public static bool validaSenhaLogin(string senha)
         {
-            if (senha == "1234")
+            if (senha == "nrts")
             {
                 return true;
             }
