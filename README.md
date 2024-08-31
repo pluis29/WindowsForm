@@ -1,9 +1,8 @@
 # Windows Form
 
-- [Windows Form](#windows-form)
-  - [Introduction](#introduction)
-  - [Technologies](#technologies)
-  - [Features](#features)
+- [Introduction](#introduction)
+- [Technologies](#technologies)
+- [Features](#features)
   
 ## Introduction
 
